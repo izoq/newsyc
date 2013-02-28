@@ -246,8 +246,8 @@
                                                                   image:nil
                                                            imageQuality:0.8
                                                               mediaType:SSPublishContentMediaTypeNews
-                                                                  title:@"ShareSDK"
-                                                                    url:@"http://nickyao.cnblogs.com"
+                                                                  title:[self pageTitle]
+                                                                    url:[currentURL absoluteString]
                                                            musicFileUrl:nil
                                                                 extInfo:nil
                                                                fileData:nil];
