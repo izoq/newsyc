@@ -170,7 +170,7 @@
 		7D148E64132D68B5008FBF32 /* libxml2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.dylib; path = usr/lib/libxml2.dylib; sourceTree = SDKROOT; };
 		7D17CA2D134AE22700763741 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
 		7D17CA2E134AE22700763741 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
-		7D1F988D1320CF720059EBBB /* newsyc.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = newsyc.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		7D1F988D1320CF720059EBBB /* StarupNews.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = StarupNews.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7D1F98911320CF720059EBBB /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		7D1F98931320CF720059EBBB /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		7D1F98951320CF720059EBBB /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -449,7 +449,7 @@
 		7D1F988E1320CF720059EBBB /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				7D1F988D1320CF720059EBBB /* newsyc.app */,
+				7D1F988D1320CF720059EBBB /* StarupNews.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -865,9 +865,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		7D1F988C1320CF720059EBBB /* newsyc */ = {
+		7D1F988C1320CF720059EBBB /* StarupNews */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 7D1F98B41320CF720059EBBB /* Build configuration list for PBXNativeTarget "newsyc" */;
+			buildConfigurationList = 7D1F98B41320CF720059EBBB /* Build configuration list for PBXNativeTarget "StarupNews" */;
 			buildPhases = (
 				7D1F98891320CF720059EBBB /* Sources */,
 				7D1F988A1320CF720059EBBB /* Frameworks */,
@@ -877,9 +877,9 @@
 			);
 			dependencies = (
 			);
-			name = newsyc;
+			name = StarupNews;
 			productName = Orangey;
-			productReference = 7D1F988D1320CF720059EBBB /* newsyc.app */;
+			productReference = 7D1F988D1320CF720059EBBB /* StarupNews.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -902,7 +902,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				7D1F988C1320CF720059EBBB /* newsyc */,
+				7D1F988C1320CF720059EBBB /* StarupNews */,
 			);
 		};
 /* End PBXProject section */
@@ -1148,6 +1148,7 @@
 					armv7,
 					armv6,
 				);
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				COPY_PHASE_STRIP = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = Classes/Prefix.pch;
@@ -1157,6 +1158,7 @@
 				INSTALL_PATH = "$(LOCAL_APPS_DIR)";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
 				WRAPPER_EXTENSION = app;
@@ -1175,7 +1177,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		7D1F98B41320CF720059EBBB /* Build configuration list for PBXNativeTarget "newsyc" */ = {
+		7D1F98B41320CF720059EBBB /* Build configuration list for PBXNativeTarget "StarupNews" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				7D1F98B51320CF720059EBBB /* Debug */,

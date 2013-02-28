@@ -65,14 +65,21 @@
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)table {
-    return 3;
+    //return 3;
+    return 2;
 }
 
 - (NSInteger)tableView:(UITableView *)table numberOfRowsInSection:(NSInteger)section {
-    switch (section) {
+    /*switch (section) {
         case 0: return 4;
         case 1: return 2;
         case 2: return 3;
+        default: return 0;
+    }*/
+    
+    switch (section) {
+        case 0: return 1;
+        case 1: return 3;
         default: return 0;
     }
 }
@@ -86,7 +93,7 @@
     cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:nil];
     [cell setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
     
-    if ([indexPath section] == 0) {
+    /*if ([indexPath section] == 0) {
         if ([indexPath row] == 0) {
             [[cell textLabel] setText:@"Best Submissions"];
         } else if ([indexPath row] == 1) {
@@ -110,17 +117,37 @@
         } else if ([indexPath row] == 2) {
             [[cell textLabel] setText:@"@newsyc_"];
         }
+    }*/
+    
+    if ([indexPath section] == 0) {
+        if ([indexPath row] == 0) {
+            [[cell textLabel] setText:@"New Comments"];
+        } 
+    } else if ([indexPath section] == 1) {
+        if ([indexPath row] == 0) {
+            [[cell textLabel] setText:@"Starup News"];
+        } else if ([indexPath row] == 1) {
+            [[cell textLabel] setText:@"news:yc homepage"];
+        } else if ([indexPath row] == 2) {
+            [[cell textLabel] setText:@"@四眼蒙面侠"];
+        }
     }
     
     return [cell autorelease];
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
-    if (section == 0) {
+    /*if (section == 0) {
         return @"Submissions";
     } else if (section == 1) {
         return @"Comments";
     } else if (section == 2) {
+        return @"Other";
+    }*/
+    
+    if (section == 0) {
+        return @"Comments";
+    } else if (section == 1) {
         return @"Other";
     }
     
@@ -128,8 +155,8 @@
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForFooterInSection:(NSInteger)section {
-    if (section == 2) {
-        return [NSString stringWithFormat:@"news:yc version %@.\n\nIf you're having issues or have suggestions, feel free to email me: support@newsyc.me\n\nSettings are available in the Settings app.", [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"] ?: [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleVersion"]];
+    if (section == 1) {
+        return [NSString stringWithFormat:@"news:yc version %@.\n\nIf you're having issues or have suggestions, feel free to email me: suchuanyi@126.com\n\nSettings are available in the Settings app.", [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"] ?: [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleVersion"]];
     }
     
     return nil;
@@ -140,7 +167,7 @@
     NSString *title = nil;
     Class controllerClass = nil;
     
-    if ([indexPath section] == 0) {
+    /*if ([indexPath section] == 0) {
         if ([indexPath row] == 0) {
             type = kHNEntryListIdentifierBestSubmissions;
             title = @"Best Submissions";
@@ -179,6 +206,28 @@
             return;
         } else if ([indexPath row] == 2) {
             BrowserController *controller = [[BrowserController alloc] initWithURL:[NSURL URLWithString:@"https://twitter.com/newsyc_"]];
+            [[self navigationController] pushController:[controller autorelease] animated:YES];
+            return;
+        }
+    }*/
+    
+    if ([indexPath section] == 0) {
+        if ([indexPath row] == 0) {
+            type = kHNEntryListIdentifierNewComments;
+            title = @"New Comments";
+            controllerClass = [CommentListController class];
+        }
+    } else if ([indexPath section] == 1) {
+        if ([indexPath row] == 0) {
+            BrowserController *controller = [[BrowserController alloc] initWithURL:kHNFAQURL];
+            [[self navigationController] pushController:[controller autorelease] animated:YES];
+            return;
+        } else if ([indexPath row] == 1) {
+            BrowserController *controller = [[BrowserController alloc] initWithURL:[NSURL URLWithString:@"http://newsyc.me/"]];
+            [[self navigationController] pushController:[controller autorelease] animated:YES];
+            return;
+        } else if ([indexPath row] == 2) {
+            BrowserController *controller = [[BrowserController alloc] initWithURL:[NSURL URLWithString:@"http://weibo.com/suchuanyi"]];
             [[self navigationController] pushController:[controller autorelease] animated:YES];
             return;
         }

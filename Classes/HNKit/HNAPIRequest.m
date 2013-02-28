@@ -49,7 +49,6 @@
     NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
     
     NSString *resp = [[NSString alloc] initWithData:received encoding:NSUTF8StringEncoding];
-
     NSDictionary *result = nil;
 
     if ([resp length] > 0) {

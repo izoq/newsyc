@@ -108,7 +108,9 @@
 - (NSString *)_generateLoginTokenWithForLoginPage:(NSString *)loginPage {
     if (loginPage == nil) return nil;
     
-    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", [kHNWebsiteURL absoluteString], loginPage]];
+    //NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", [kHNWebsiteURL absoluteString], loginPage]];
+    NSURL *url = [NSURL URLWithString:loginPage relativeToURL:kHNWebsiteURL];
+    NSLog(@"login url: %@", url);
     NSData *data = [NSData dataWithContentsOfURL:url];
     XMLDocument *document = [[[XMLDocument alloc] initWithHTMLData:data] autorelease];
     if (document == nil) return nil;

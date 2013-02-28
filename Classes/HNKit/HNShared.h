@@ -7,8 +7,10 @@
 #define HNKIT_RENDERING_ENABLED
 
 
-#define kHNWebsiteHost @"news.ycombinator.com"
-#define kHNFAQURL [NSURL URLWithString:@"http://ycombinator.com/newsfaq.html"]
+//#define kHNWebsiteHost @"news.ycombinator.com"
+#define kHNWebsiteHost @"news.dbanotes.net"
+//#define kHNFAQURL [NSURL URLWithString:@"http://ycombinator.com/newsfaq.html"]
+#define kHNFAQURL [NSURL URLWithString:@"http://news.dbanotes.net"]
 #define kHNWebsiteURL [NSURL URLWithString:[NSString stringWithFormat:@"http://%@/", kHNWebsiteHost]]
 
 
