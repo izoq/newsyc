@@ -9,6 +9,7 @@
 #include <sys/types.h>
 #include <sys/sysctl.h>
 #import <ShareSDK/ShareSDK.h>
+#import <QQApi/QQApi.h>
 
 #import "AppDelegate.h"
 #import "SplitViewController.h"
@@ -28,6 +29,7 @@
 
 
 #import "UINavigationItem+MultipleItems.h"
+#import "WXApi.h"
 
 @implementation UINavigationController (AppDelegate)
 
@@ -107,6 +109,8 @@
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+    [WXApi registerApp:@"wx952197dea896a89f"];
+    //[QQApi registerPluginWithId:@"QQ100384779"];
     [ShareSDK registerApp:@"7a3cc705ac"];
 
     window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];

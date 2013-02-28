@@ -7,6 +7,8 @@
 		<dict>
 			<key>CFBundleURLSchemes</key>
 			<array>
+				<string>QQ100384779</string>
+				<string>wx952197dea896a89f</string>
 				<string>fb107704292745179</string>
 				<string>sinaweibosso.3201194191</string>
 			</array>
