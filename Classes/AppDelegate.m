@@ -8,6 +8,7 @@
 
 #include <sys/types.h>
 #include <sys/sysctl.h>
+#import <ShareSDK/ShareSDK.h>
 
 #import "AppDelegate.h"
 #import "SplitViewController.h"
@@ -24,6 +25,7 @@
 
 #import "HNKit.h"
 #import "InstapaperSession.h"
+
 
 #import "UINavigationItem+MultipleItems.h"
 
@@ -105,6 +107,8 @@
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+    [ShareSDK registerApp:@"7a3cc705ac"];
+
     window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
 
     HNSessionController *sessionController = [HNSessionController sessionController];
@@ -174,7 +178,8 @@
 - (void)splitViewController:(UISplitViewController *)svc willHideViewController:(UIViewController *)aViewController withBarButtonItem:(UIBarButtonItem *)barButtonItem forPopoverController:(UIPopoverController *)pc {
     popoverItem = [barButtonItem retain];
     // XXX: work around navigation bar shrinking this button
-    [popoverItem setTitle:@"HN"];
+    //[popoverItem setTitle:@"HN"];
+    [popoverItem setTitle:@"SN"];
     popover = [pc retain];
     
     NSArray *controllers = [rightNavigationController viewControllers];
@@ -291,6 +296,14 @@
 
 - (void)applicationWillTerminate:(UIApplication *)application {
 
+}
+
+- (BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url {
+    return [ShareSDK handleOpenURL:url wxDelegate:self];
+}
+
+- (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
+    return [ShareSDK handleOpenURL:url wxDelegate:self];
 }
 
 - (void)dealloc {

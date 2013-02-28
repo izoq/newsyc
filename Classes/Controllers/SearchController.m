@@ -25,7 +25,7 @@
 - (void)loadView {
     [super loadView];
     
-    searchBar = [[UISearchBar alloc] init];
+    /*searchBar = [[UISearchBar alloc] init];
     [searchBar sizeToFit];
     [searchBar setPlaceholder:@"Search Hacker News"];
     [searchBar setFrame:CGRectMake(0, 0, [[self view] bounds].size.width, [searchBar bounds].size.height)];
@@ -35,7 +35,7 @@
     coloredView = [[UINavigationBar alloc] initWithFrame:CGRectMake(0, 0, [[self view] bounds].size.width, [searchBar bounds].size.height)];
     [coloredView setAutoresizingMask:UIViewAutoresizingFlexibleBottomMargin | UIViewAutoresizingFlexibleWidth];
     [[self view] addSubview:coloredView];
-    
+
     facetControl = [[UISegmentedControl alloc] initWithItems:[NSArray arrayWithObjects:@"Interesting", @"Recent", nil]];
     [facetControl setAutoresizingMask:UIViewAutoresizingFlexibleBottomMargin | UIViewAutoresizingFlexibleWidth];
     [facetControl addTarget:self action:@selector(facetSelected:) forControlEvents:UIControlEventValueChanged];
@@ -44,19 +44,19 @@
     [facetControl sizeToFit];
     [facetControl setFrame:CGRectMake(([coloredView bounds].size.height - [facetControl bounds].size.height) / 2, ([coloredView bounds].size.height - [facetControl bounds].size.height) / 2, [coloredView bounds].size.width - ((([coloredView bounds].size.height - [facetControl bounds].size.height) / 2) * 2), [facetControl bounds].size.height)];
     [coloredView addSubview:facetControl];
-    
+
     tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, [coloredView bounds].size.height, [[self view] bounds].size.width, [[self view] bounds].size.height - [coloredView bounds].size.height)];
     [tableView setAutoresizingMask:UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight];
     [tableView setDelegate:self];
     [tableView setDataSource:self];
     [[self view] addSubview:tableView];
-    
+
     indicator = [[LoadingIndicatorView alloc] initWithFrame:[tableView frame]];
     [indicator setBackgroundColor:[UIColor whiteColor]];
     [indicator setAutoresizingMask:UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth];
     [indicator setHidden:YES];
     [[self view] addSubview:indicator];
-    
+
     emptyResultsView = [[UILabel alloc] initWithFrame:[tableView frame]];
     [emptyResultsView setAutoresizingMask:UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth];
     [emptyResultsView setText:@"No Results"];
@@ -64,6 +64,14 @@
     [emptyResultsView setFont:[UIFont systemFontOfSize:17.0f]];
     [emptyResultsView setTextColor:[UIColor grayColor]];
     [emptyResultsView setFrame:[tableView frame]];
+    [[self view] addSubview:emptyResultsView];*/
+
+    emptyResultsView = [[UILabel alloc] initWithFrame:self.view.bounds];
+    [emptyResultsView setAutoresizingMask:UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth];
+    [emptyResultsView setText:@"Under construction..."];
+    [emptyResultsView setTextAlignment:NSTextAlignmentCenter];
+    [emptyResultsView setFont:[UIFont systemFontOfSize:17.0f]];
+    [emptyResultsView setTextColor:[UIColor grayColor]];
     [[self view] addSubview:emptyResultsView];
 }
 

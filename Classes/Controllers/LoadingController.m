@@ -6,6 +6,7 @@
 //  Copyright 2011 Xuzz Productions, LLC. All rights reserved.
 //
 
+#import <ShareSDK/ShareSDK.h>
 #import "LoadingController.h"
 
 #import "HNKit.h"
@@ -250,9 +251,21 @@
 }
 
 - (void)actionTapped {
-    SharingController *sharingController = [[SharingController alloc] initWithURL:[source URL] title:[self sourceTitle] fromController:self];
+    /*SharingController *sharingController = [[SharingController alloc] initWithURL:[source URL] title:[self sourceTitle] fromController:self];
     [sharingController showFromBarButtonItem:actionItem];
-    [sharingController release];
+    [sharingController release];*/
+
+    NSString *content = [NSString stringWithFormat:@"%@ %@", [self sourceTitle], [source URL]];
+    [ShareSDK shareContentWithType:ShareTypeAny
+                           content:[ShareSDK publishContent:content
+                                             defaultContent:@""
+                                                      image:nil imageQuality:0.8
+                                                  mediaType:SSPublishContentMediaTypeText]
+               containerController:self
+                     statusBarTips:YES oneKeyShareList:[NSArray defaultOneKeyShareList]
+                    shareViewStyle:ShareViewStyleDefault
+                    shareViewTitle:@"内容分享"
+                            result:nil];
 }
 
 AUTOROTATION_FOR_PAD_ONLY
