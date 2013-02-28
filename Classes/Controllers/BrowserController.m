@@ -241,13 +241,22 @@
                                  }];*/
     } else {
         NSString *content = [NSString stringWithFormat:@"%@ %@", [self pageTitle], currentURL];
+        id<ISSPublishContent> publishContent = [ShareSDK publishContent:content
+                                                         defaultContent:@""
+                                                                  image:nil
+                                                           imageQuality:0.8
+                                                              mediaType:SSPublishContentMediaTypeNews
+                                                                  title:@"ShareSDK"
+                                                                    url:@"http://nickyao.cnblogs.com"
+                                                           musicFileUrl:nil
+                                                                extInfo:nil
+                                                               fileData:nil];
+
         [ShareSDK shareContentWithType:ShareTypeAny
-                               content:[ShareSDK publishContent:content
-                                                 defaultContent:@""
-                                                          image:nil imageQuality:0.8
-                                                      mediaType:SSPublishContentMediaTypeText]
+                               content:publishContent
                    containerController:self
-                         statusBarTips:YES oneKeyShareList:[NSArray defaultOneKeyShareList]
+                         statusBarTips:YES
+                       oneKeyShareList:[NSArray defaultOneKeyShareList]
                         shareViewStyle:ShareViewStyleDefault
                         shareViewTitle:@"内容分享"
                                 result:nil];
