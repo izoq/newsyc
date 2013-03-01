@@ -50,8 +50,11 @@ NSString *ssSohuConsumerSecret = @"yfTZf)!rVwh*3dqQuVJVsUL37!F)!yS9S!Orcsij";
 #pragma mark - 豆瓣社区应用配置信息
 //http://developers.douban.com上注册豆瓣社区应用，并将相关信息填写到以下字段
 
-NSString *ssDoubanAppKey = @"02e2cbe5ca06de5908a863b15e149b0b";
-NSString *ssDoubanAppSecret = @"9f1e7b4f71304f2f";
+//NSString *ssDoubanAppKey = @"02e2cbe5ca06de5908a863b15e149b0b";
+//NSString *ssDoubanAppSecret = @"9f1e7b4f71304f2f";
+
+NSString *ssDoubanAppKey = @"01d67fb31b9fc86905837f1952df593b";
+NSString *ssDoubanAppSecret = @"2a8c40fc217da88b";
 NSString *ssDoubanRedirectUri = @"http://www.sharesdk.cn";
 
 #pragma mark - 人人网应用配置信息
