@@ -6,14 +6,10 @@
 //  Copyright 2011 Xuzz Productions, LLC. All rights reserved.
 //
 
-#include <sys/types.h>
-#include <sys/sysctl.h>
 #import <ShareSDK/ShareSDK.h>
 #import <QQApi/QQApi.h>
 
 #import "AppDelegate.h"
-#import "SplitViewController.h"
-#import "NavigationController.h"
 #import "SessionListController.h"
 #import "MainTabBarController.h"
 
@@ -24,9 +20,6 @@
 #import "MoreController.h"
 #import "EmptyController.h"
 
-#import "HNKit.h"
-#import "InstapaperSession.h"
-
 
 #import "UINavigationItem+MultipleItems.h"
 #import "WXApi.h"
@@ -35,11 +28,11 @@
 
 - (BOOL)controllerBelongsOnLeft:(UIViewController *)controller {
     return [controller isKindOfClass:[MainTabBarController class]]
-        || [controller isKindOfClass:[SessionListController class]]
-        || [controller isKindOfClass:[SearchController class]]
-        || [controller isKindOfClass:[ProfileController class]]
-        || [controller isKindOfClass:[MoreController class]]
-        || [controller isKindOfClass:[SubmissionListController class]];
+            || [controller isKindOfClass:[SessionListController class]]
+            || [controller isKindOfClass:[SearchController class]]
+            || [controller isKindOfClass:[ProfileController class]]
+            || [controller isKindOfClass:[MoreController class]]
+            || [controller isKindOfClass:[SubmissionListController class]];
 }
 
 - (BOOL)controllerRequiresClearing:(UIViewController *)controller {
@@ -74,7 +67,7 @@
 
 - (void)pushController:(UIViewController *)controller animated:(BOOL)animated {
     AppDelegate *delegate = (AppDelegate *) [[UIApplication sharedApplication] delegate];
-    
+
     if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
         if ([self presentingViewController] == nil) {
             if ([self controllerBelongsOnLeft:controller]) {
@@ -93,7 +86,7 @@
                 } else {
                     [delegate pushLeafViewController:controller animated:animated];
                 }
-                
+
                 [self dismissViewControllerAnimated:animated completion:NULL];
             } else {
                 [self pushViewController:controller animated:animated];
@@ -113,6 +106,13 @@
     [QQApi registerPluginWithId:@"QQ075BCD15"];
     [ShareSDK registerApp:@"7a3cc705ac"];
 
+    //横屏设置
+    [ShareSDK setInterfaceOrientationMask:UIInterfaceOrientationMaskLandscape];
+
+    //监听用户信息变更
+    [ShareSDK addNotificationWithName:SSN_USER_INFO_UPDATE target:self
+                               action:@selector(userInfoUpdateHandler:)];
+
     window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
 
     HNSessionController *sessionController = [HNSessionController sessionController];
@@ -126,15 +126,15 @@
     SessionListController *sessionListController = [[SessionListController alloc] init];
     [sessionListController setAutomaticDisplaySession:recentSession];
     [sessionListController autorelease];
-    
+
     navigationController = [[NavigationController alloc] initWithRootViewController:sessionListController];
     [navigationController setLoginDelegate:sessionListController];
     [navigationController setDelegate:self];
     [navigationController autorelease];
-    
+
     if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
         [window setRootViewController:navigationController];
-        
+
         [HNObjectBodyRenderer setDefaultFontSize:13.0f];
     } else if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
         rightNavigationController = [[NavigationController alloc] init];
@@ -146,10 +146,11 @@
 
         splitController = [[SplitViewController alloc] init];
         [splitController setViewControllers:[NSArray arrayWithObjects:navigationController, rightNavigationController, nil]];
-        if ([splitController respondsToSelector:@selector(setPresentsWithGesture:)]) [splitController setPresentsWithGesture:YES];
+        if ([splitController respondsToSelector:@selector(setPresentsWithGesture:)])
+            [splitController setPresentsWithGesture:YES];
         [splitController setDelegate:self];
         [splitController autorelease];
-        
+
         [window setRootViewController:splitController];
 
         [HNObjectBodyRenderer setDefaultFontSize:16.0f];
@@ -165,10 +166,10 @@
     pingController = [[PingController alloc] init];
     [pingController setDelegate:self];
     [pingController ping];
-    
+
     return YES;
 }
-         
+
 #pragma mark - View Controllers
 
 - (void)navigationController:(UINavigationController *)navigation willShowViewController:(UIViewController *)viewController animated:(BOOL)animated {
@@ -185,7 +186,7 @@
     //[popoverItem setTitle:@"HN"];
     [popoverItem setTitle:@"SN"];
     popover = [pc retain];
-    
+
     NSArray *controllers = [rightNavigationController viewControllers];
     if ([controllers count] > 0) {
         UIViewController *root = [controllers objectAtIndex:0];
@@ -199,7 +200,7 @@
         UIViewController *root = [controllers objectAtIndex:0];
         [[root navigationItem] removeLeftBarButtonItem:popoverItem];
     }
-    
+
     [popoverItem release];
     popoverItem = nil;
     [popover release];
@@ -216,7 +217,7 @@
 
 - (void)pushBranchViewController:(UIViewController *)branchController animated:(BOOL)animated {
     [navigationController pushViewController:branchController animated:animated];
-    
+
     if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
         [[branchController navigationItem] setRightBarButtonItems:[[branchController navigationItem] leftBarButtonItems]];
         [[branchController navigationItem] setLeftBarButtonItems:nil];
@@ -233,15 +234,18 @@
 
 - (void)setLeafViewController:(UIViewController *)leafController animated:(BOOL)animated {
     [rightNavigationController setViewControllers:[NSArray arrayWithObject:leafController]];
-    
-    if (popoverItem != nil) [[leafController navigationItem] addLeftBarButtonItem:popoverItem atPosition:UINavigationItemPositionLeft];
-    if (popover != nil) [popover dismissPopoverAnimated:animated];
+
+    if (popoverItem != nil)
+        [[leafController navigationItem] addLeftBarButtonItem:popoverItem atPosition:UINavigationItemPositionLeft];
+    if (popover != nil)
+        [popover dismissPopoverAnimated:animated];
 }
 
 - (void)clearLeafViewControllerAnimated:(BOOL)animated {
     if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPad) {
         EmptyController *emptyController = [[EmptyController alloc] init];
-        if (popoverItem != nil) [[emptyController navigationItem] addLeftBarButtonItem:popoverItem atPosition:UINavigationItemPositionLeft];
+        if (popoverItem != nil)
+            [[emptyController navigationItem] addLeftBarButtonItem:popoverItem atPosition:UINavigationItemPositionLeft];
         [rightNavigationController setViewControllers:[NSArray arrayWithObject:emptyController]];
         [emptyController release];
     }
@@ -288,14 +292,14 @@
 
 - (void)applicationWillEnterForeground:(UIApplication *)application {
     [[NSUserDefaults standardUserDefaults] synchronize];
-    
+
     [[HNSessionController sessionController] refresh];
 
     [InstapaperSession logoutIfNecessary];
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {
-    
+
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application {
@@ -317,6 +321,82 @@
     [splitController release];
 
     [super dealloc];
+}
+
+- (void)userInfoUpdateHandler:(NSNotification *)notif {
+    NSMutableArray *authList = [NSMutableArray arrayWithContentsOfFile:[NSString stringWithFormat:@"%@/authListCache.plist", NSTemporaryDirectory()]];
+    if (authList == nil) {
+        authList = [NSMutableArray array];
+    }
+
+    NSString *platName = nil;
+    NSInteger plat = [[[notif userInfo] objectForKey:SSK_PLAT] integerValue];
+    switch (plat) {
+        case ShareTypeSinaWeibo:
+            platName = @"新浪微博";
+            break;
+        case ShareType163Weibo:
+            platName = @"网易微博";
+            break;
+        case ShareTypeDouBan:
+            platName = @"豆瓣";
+            break;
+        case ShareTypeFacebook:
+            platName = @"Facebook";
+            break;
+        case ShareTypeKaixin:
+            platName = @"开心网";
+            break;
+        case ShareTypeQQSpace:
+            platName = @"QQ空间";
+            break;
+        case ShareTypeRenren:
+            platName = @"人人网";
+            break;
+        case ShareTypeSohuWeibo:
+            platName = @"搜狐微博";
+            break;
+        case ShareTypeTencentWeibo:
+            platName = @"腾讯微博";
+            break;
+        case ShareTypeTwitter:
+            platName = @"Twitter";
+            break;
+        case ShareTypeInstapaper:
+            platName = @"Instapaper";
+            break;
+        case ShareTypeYouDaoNote:
+            platName = @"有道云笔记";
+            break;
+        default:
+            platName = @"未知";
+    }
+    id <ISSUserInfo> userInfo = [[notif userInfo] objectForKey:SSK_USER_INFO];
+
+    BOOL hasExists = NO;
+    for (int i = 0; i < [authList count]; i++) {
+        NSMutableDictionary *item = [authList objectAtIndex:i];
+        ShareType type = (ShareType) [[item objectForKey:@"type"] integerValue];
+        if (type == plat) {
+            [item setObject:[userInfo nickname] forKey:@"username"];
+            hasExists = YES;
+            break;
+        }
+    }
+
+    if (!hasExists) {
+        NSDictionary *newItem = [NSMutableDictionary dictionaryWithObjectsAndKeys:
+                                                             platName,
+                                                             @"title",
+                                                             [NSNumber numberWithInteger:plat],
+                                                             @"type",
+                                                             [userInfo nickname],
+                                                             @"username",
+                                                             nil];
+        [authList addObject:newItem];
+    }
+
+    [authList writeToFile:[NSString stringWithFormat:@"%@/authListCache.plist", NSTemporaryDirectory()] atomically:YES];
 }
 
 @end

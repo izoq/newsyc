@@ -15,6 +15,7 @@
 #import "UIApplication+ActivityIndicator.h"
 #import "UINavigationItem+MultipleItems.h"
 #import "SharingController.h"
+#import "ShareSDKHelper.h"
 
 @implementation BrowserController
 @synthesize currentURL;
@@ -77,7 +78,7 @@
     else
         changableItem = refreshItem;
 
-    [toolbar setItems:[NSArray arrayWithObjects:spacerItem, backItem, spacerItem, spacerItem, forwardItem, spacerItem, spacerItem, spacerItem, readabilityItem, spacerItem, spacerItem, changableItem, spacerItem, spacerItem, shareItem, spacerItem, nil]];
+    [toolbar setItems:[NSArray arrayWithObjects:spacerItem, backItem, spacerItem, spacerItem, forwardItem, spacerItem, spacerItem, spacerItem, shareItem, spacerItem, spacerItem, changableItem, spacerItem, spacerItem, readabilityItem, spacerItem, nil]];
 }
 
 - (void)loadView {
@@ -201,66 +202,11 @@
 }
 
 - (void)share:(BarButtonItem *)sender {
-    if ([UIDevice currentDevice].isPad) {
-        SharingController *sharingController = [[SharingController alloc] initWithURL:currentURL title:[self pageTitle] fromController:self];
-        [sharingController showFromBarButtonItem:shareItem];
-        [sharingController release];
-        /*id<ISSPublishContent> publishContent = [ShareSDK publishContent:content
-                                                          defaultContent:@""
-                                                                   image:nil
-                                                            imageQuality:0.8
-                                                               mediaType:SSPublishContentMediaTypeNews
-                                                                   title:@"ShareSDK"
-                                                                     url:@"http://www.sharesdk.cn"
-                                                            musicFileUrl:nil
-                                                                 extInfo:nil
-                                                                fileData:nil];
+    [ShareSDKHelper shareWithUrl:currentURL title:[self pageTitle] fromController:self withView:sender.buttonView];
 
-         [ShareSDK showShareActionSheet:self
-                          iPadContainer:[ShareSDK iPadShareContainerWithView:toolbar arrowDirect:UIPopoverArrowDirectionUp]
-                              shareList:nil
-                                content:publishContent
-                          statusBarTips:YES
-                             convertUrl:YES      //委托转换链接标识，YES：对分享链接进行转换，NO：对分享链接不进行转换，为此值时不进行回流统计。
-                            authOptions:nil
-                       shareViewOptions:[ShareSDK defaultShareViewOptionsWithTitle:@"内容分享"
-                                                                   oneKeyShareList:[NSArray defaultOneKeyShareList]
-                                                                    qqButtonHidden:NO
-                                                             wxSessionButtonHidden:NO
-                                                            wxTimelineButtonHidden:NO
-                                                              showKeyboardOnAppear:YES]
-                                 result:^(ShareType type, SSPublishContentState state, id<ISSStatusInfo> statusInfo, id<ICMErrorInfo> error, BOOL end) {
-                                     if (state == SSPublishContentStateSuccess)
-                                     {
-                                         NSLog(@"分享成功");
-                                     }
-                                     else if (state == SSPublishContentStateFail)
-                                     {
-                                         NSLog(@"分享失败,错误码:%d,错误描述:%@", [error errorCode], [error errorDescription]);
-                                     }
-                                 }];*/
-    } else {
-        NSString *content = [NSString stringWithFormat:@"%@ %@", [self pageTitle], currentURL];
-        id<ISSPublishContent> publishContent = [ShareSDK publishContent:content
-                                                         defaultContent:@""
-                                                                  image:nil
-                                                           imageQuality:0.8
-                                                              mediaType:SSPublishContentMediaTypeNews
-                                                                  title:[self pageTitle]
-                                                                    url:[currentURL absoluteString]
-                                                           musicFileUrl:nil
-                                                                extInfo:nil
-                                                               fileData:nil];
-
-        [ShareSDK shareContentWithType:ShareTypeAny
-                               content:publishContent
-                   containerController:self
-                         statusBarTips:YES
-                       oneKeyShareList:[NSArray defaultOneKeyShareList]
-                        shareViewStyle:ShareViewStyleDefault
-                        shareViewTitle:@"内容分享"
-                                result:nil];
-    }
+    /*SharingController *sharingController = [[SharingController alloc] initWithURL:currentURL title:[self pageTitle] fromController:self];
+    [sharingController showFromBarButtonItem:shareItem];
+    [sharingController release];*/
 
 }
 
